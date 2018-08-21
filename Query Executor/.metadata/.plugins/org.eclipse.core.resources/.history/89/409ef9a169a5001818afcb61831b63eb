@@ -1,0 +1,10 @@
+package app;
+
+import writers.FormatWriter;
+
+public class OutputFormatFactory {
+	   public FormatWriter getWriter(String format){
+		   
+	   }
+		   
+}

@@ -1,0 +1,22 @@
+/**
+ * @author DANIEL
+ *
+ */
+package app;
+
+import java.util.Properties;
+
+public class Main {
+	
+	
+	public static void main(String[] args) {
+		System.out.println(args[0]);
+		System.out.println(args[1]);
+		
+		Properties prop = PropertyHolder.getInstance().getProps();
+		System.out.println(prop.getProperty("user").toString());
+	}
+	
+	
+	
+}

@@ -1,0 +1,6 @@
+url = jdbc:postgresql://localhost/test
+user = user
+password = pass
+ssl = true
+output = csv
+file_path = C:/yourfile.csv

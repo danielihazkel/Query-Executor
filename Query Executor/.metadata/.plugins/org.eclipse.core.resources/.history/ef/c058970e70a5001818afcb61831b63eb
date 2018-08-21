@@ -1,0 +1,26 @@
+/**
+ * @author DANIEL
+ *
+ */
+package app;
+
+import java.util.Properties;
+
+import writers.FormatWriter;
+
+public class Main {
+	
+	
+	public static void main(String[] args) {
+		System.out.println(args[0]);
+		System.out.println(args[1]);
+		
+		Properties prop = PropertyHolder.getInstance().getProps();
+		System.out.println(prop.getProperty("user"));
+		FormatWriter writer = OutputFormatFactory.getWriter(prop.getProperty("output"));
+		System.out.println(writer.getClass().getName());
+	}
+	
+	
+	
+}

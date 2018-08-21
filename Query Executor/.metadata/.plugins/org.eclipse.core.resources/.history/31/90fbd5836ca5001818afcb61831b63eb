@@ -1,0 +1,99 @@
+package writers;
+
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
+
+import com.sun.javafx.fxml.BeanAdapter;
+
+public class ResultSetAdapter implements Iterable<Map<String, Object>> {
+	    private ResultSet resultSet;
+	    private ResultSetMetaData resultSetMetaData;
+
+	    private LinkedHashMap<String, Object> row = new LinkedHashMap<>();
+
+	    public ResultSetAdapter(ResultSet resultSet) {
+	        if (resultSet == null) {
+	            throw new IllegalArgumentException();
+	        }
+
+	        this.resultSet = resultSet;
+
+	        try {
+	            resultSetMetaData = resultSet.getMetaData();
+	        } catch (SQLException exception) {
+	            throw new RuntimeException(exception);
+	        }
+	    }
+
+	    @Override
+	    public Iterator<Map<String, Object>> iterator() {
+	        return new Iterator<Map<String, Object>>() {
+	            private Boolean hasNext = null;
+
+	            @Override
+	            public boolean hasNext() {
+	                if (hasNext == null) {
+	                    try {
+	                        hasNext = resultSet.next() ? Boolean.TRUE : Boolean.FALSE;
+	                    } catch (SQLException exception) {
+	                        throw new RuntimeException(exception);
+	                    }
+	                }
+
+	                return hasNext.booleanValue();
+	            }
+
+	            @Override
+	            public Map<String, Object> next() {
+	                if (!hasNext()) {
+	                    throw new NoSuchElementException();
+	                }
+
+	                row.clear();
+
+	                try {
+	                    for (int i = 0, n = resultSetMetaData.getColumnCount(); i < n; i++) {
+	                        row.put(resultSetMetaData.getColumnLabel(i + 1), resultSet.getObject(i + 1));
+	                    }
+	                } catch (SQLException exception) {
+	                    throw new RuntimeException(exception);
+	                }
+
+	                hasNext = null;
+
+	                return row;
+	            }
+	        };
+	    }
+
+	    public <T> Iterable<T> adapt(Class<T> elementType) {
+	        return new Iterable<T>() {
+	            @Override
+	            public Iterator<T> iterator() {
+	                return new Iterator<T>() {
+	                    private Iterator<Map<String, Object>> iterator = ResultSetAdapter.this.iterator();
+
+	                    private T proxy = BeanAdapter.adapt(row, elementType);
+
+	                    @Override
+	                    public boolean hasNext() {
+	                        return iterator.hasNext();
+	                    }
+
+	                    @Override
+	                    public T next() {
+	                        iterator.next();
+
+	                        return proxy;
+	                    }
+	                };
+	            }
+	        };
+	    }
+	}
+}

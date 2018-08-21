@@ -1,0 +1,21 @@
+package app;
+
+public class PropertyHolder {
+    // static variable single_instance of type Singleton
+    private static PropertyHolder single_instance = null;
+ 
+    // variable of type String
+    public String s;
+ 
+    // private constructor restricted to this class itself
+    private PropertyHolder(){}
+ 
+    // static method to create instance of Singleton class
+    public static PropertyHolder getInstance()
+    {
+        if (single_instance == null)
+            single_instance = new PropertyHolder();
+ 
+        return single_instance;
+    }
+}

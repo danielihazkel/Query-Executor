@@ -1,0 +1,23 @@
+/**
+ * @author DANIEL
+ *
+ */
+package app;
+
+import java.sql.ResultSet;
+import java.util.Properties;
+
+import writers.FormatWriter;
+
+public class Main {
+	
+	
+	public static void main(String args) {		
+		Properties props = PropertyHolder.getInstance().getProps();
+		ResultSet resultSet = DBQuery.getResults(args[1], props);
+		FormatWriter writer = OutputFormatFactory.getWriter(props.getProperty("output"));
+		writer.write(resultSet,props.getProperty("file_path"));
+		System.out.println(writer.getClass().getName());
+	}
+	
+}

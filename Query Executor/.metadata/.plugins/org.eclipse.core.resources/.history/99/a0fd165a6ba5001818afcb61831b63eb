@@ -1,0 +1,25 @@
+package writers;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.opencsv.CSVWriter;
+
+public class CsvWriter implements FormatWriter {
+
+	@Override
+	public boolean write(ResultSet resultSet) {
+		try (CSVWriter writer = new CSVWriter(new FileWriter("yourfile.csv"));){
+			Boolean includeHeaders = true;
+			writer.writeAll(resultSet, includeHeaders);
+			writer.close();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		return false;
+		
+	}
+
+}

@@ -1,0 +1,16 @@
+package writers;
+
+import java.io.FileWriter;
+import java.sql.ResultSet;
+
+import com.opencsv.CSVWriter;
+
+public class CsvWriter implements FormatWriter {
+
+	@Override
+	public boolean write(ResultSet resultSet) {
+		CSVWriter writer = new CSVWriter(new FileWriter("yourfile.csv"), '\t');
+		
+	}
+
+}

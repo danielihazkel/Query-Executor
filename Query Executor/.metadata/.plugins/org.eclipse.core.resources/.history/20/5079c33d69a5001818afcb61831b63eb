@@ -1,0 +1,8 @@
+package app;
+
+import java.sql.ResultSet;
+
+public interface FormatWriter {
+
+	public boolean write(ResultSet resultSet);
+}

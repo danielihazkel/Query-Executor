@@ -1,0 +1,14 @@
+package writers;
+
+import java.sql.ResultSet;
+
+public class JsonWriter implements FormatWriter {
+	/**
+	 * implement json writer
+	 */
+	@Override
+	public boolean write(ResultSet resultSet) {
+		return false;
+	}
+
+}
