@@ -1,0 +1,6 @@
+db and file location properties are in config.properties
+i used gradle as dependency manager
+i used openCsv, postgresql driver and log4j libraries
+
+example arguments i used:
+"SELECT * FROM pg_catalog.pg_am" csv
