@@ -4,3 +4,4 @@ i used openCsv, postgresql driver and log4j libraries
 
 example arguments i used:
 "SELECT * FROM pg_catalog.pg_am" csv
+test
